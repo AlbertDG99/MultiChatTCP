@@ -70,7 +70,7 @@ public class Chat extends JFrame implements Observer {
         UI.put("OptionPane.background", Color.black);
         UI.put("Panel.background", Color.white);
         nombreUsu = JOptionPane.showInputDialog("Ingresa el nombre con el que te deseas identificar");
-        while(nombreUsu!=null){
+        while(nombreUsu==null){
             nombreUsu = JOptionPane.showInputDialog("Ingresa el nombre con el que te deseas identificar");
         }
         if (nombreUsu==null){
