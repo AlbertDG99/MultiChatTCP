@@ -1,20 +1,19 @@
 package com.company;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.ImageObserver;
 import java.util.Observable;
 import java.util.Observer;
 
 public class Chat extends JFrame implements Observer {
 
-    private String nombreUsu = "Usuario 1";
+    private static String nombreUsu;
     private JPanel mainPanel;
     private JTextArea tChat;//Chat donde aparecen los mensajes
     private JTextField tMensaje;//Mensaje que escribo para enviarlo
     private JButton bEnviar;//Boton para enviar los mensajes
-    private JButton GIFButton;
 
 
     public Chat(String titulo) {
@@ -36,8 +35,20 @@ public class Chat extends JFrame implements Observer {
             public void actionPerformed(ActionEvent e) {
                 enviarMensaje();
             }
+
+        });
+
+        tMensaje.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode()==KeyEvent.VK_ENTER){
+                    enviarMensaje();
+                }
+            }
         });
     }
+
+
 
     /*Enviar mensaje
      * Envia un mensaje desde un usuario hacia otro
@@ -55,7 +66,16 @@ public class Chat extends JFrame implements Observer {
     }
 
     public static void main(String[] args) {
-
+        UIManager UI=new UIManager();
+        UI.put("OptionPane.background", Color.black);
+        UI.put("Panel.background", Color.white);
+        nombreUsu = JOptionPane.showInputDialog("Ingresa el nombre con el que te deseas identificar");
+        while(nombreUsu!=null){
+            nombreUsu = JOptionPane.showInputDialog("Ingresa el nombre con el que te deseas identificar");
+        }
+        if (nombreUsu==null){
+            nombreUsu="Samurai";
+        }
         JFrame frame = new Chat("TurboChat");
         frame.setSize(500, 500);
         frame.setVisible(true);
