@@ -25,7 +25,7 @@ public class Chat extends JFrame implements Observer {
         this.pack();
 
         //Instanciamos el servidor dentro del objeto chat
-        Servidor servidor = new Servidor(8000);
+        Servidor servidor = new Servidor(5000);
         // Agrego chat como observador de servidor para recibir notificaciones de mensajes
         servidor.addObserver(this);
         Thread thread = new Thread(servidor);
@@ -49,7 +49,7 @@ public class Chat extends JFrame implements Observer {
 
         tMensaje.setText("");
 
-        Cliente cliente = new Cliente(5000, mensaje);
+        Cliente cliente = new Cliente(8000, mensaje);
         Thread thread = new Thread(cliente);
         thread.start();
     }
@@ -67,6 +67,6 @@ public class Chat extends JFrame implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-
+        this.tChat.append((String) arg);
     }
 }
