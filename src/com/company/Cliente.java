@@ -1,38 +1,50 @@
 package com.company;
 
-import java.io.DataInputStream;
-import java.io.DataOutput;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import javax.swing.*;
+import java.io.*;
 import java.net.Socket;
 
 public class Cliente implements Runnable {
 
     private int puerto;
     private String mensaje;
+    private String ruta;
 
-    public Cliente(int puerto, String mensaje) {
+    public Cliente(int puerto, String mensaje,String ruta) {
         this.puerto = puerto;
         this.mensaje = mensaje;
+        this.ruta=ruta;
     }
+
+
 
     @Override
     public void run() {
-        final String HOST = "192.168.1.121"; // 127.0.0.1
+        final String HOST = "25.121.10.101"; // 127.0.0.1
 
         DataOutputStream out;
 
         try {
-            Socket cliente = new Socket(HOST, puerto);
+            if(this.mensaje.equals("")){
+                //ImageIcon imagen=new ImageIcon(this.ruta);
+                //Socket cliente = new Socket(HOST, puerto);
 
-            out = new DataOutputStream(cliente.getOutputStream());
+               // OutputStream outputSream=new BufferedOutputStream(outputSream)
 
-            //Envio del mensaje
-            out.writeUTF(mensaje);
+            }else{//Mensaje
+                Socket cliente = new Socket(HOST, puerto);
 
-            cliente.close();
+                out = new DataOutputStream(cliente.getOutputStream());
+
+                //Envio del mensaje
+                out.writeUTF(mensaje);
+
+                cliente.close();
+            }
+
         } catch (Exception e) {
 
         }
     }
+
 }

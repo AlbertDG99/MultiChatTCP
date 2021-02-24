@@ -22,9 +22,9 @@ public class Usuario1 extends javax.swing.JFrame implements Observer {
     	
     	this.txtTexto.append(mensaje);
     	
-    	Cliente cliente = new Cliente(5000, mensaje);
-    	Thread thread = new Thread(cliente);
-    	thread.start();
+    	//Cliente cliente = new Cliente(5000, mensaje);
+    	//Thread thread = new Thread(cliente);
+    	//thread.start();
     }
 
     @Override
