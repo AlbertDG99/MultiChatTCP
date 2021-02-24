@@ -72,9 +72,9 @@ private  File selectedFile;
                 int result = fileChooser.showOpenDialog(mainPanel);
                 //Si selecciona una foto
                 if (result == JFileChooser.APPROVE_OPTION) {
+
                     selectedFile = fileChooser.getSelectedFile();
                     Cliente cliente = new Cliente(8000, "",selectedFile.getAbsolutePath());
-
                 }
             }
         });
@@ -117,10 +117,7 @@ private  File selectedFile;
         UI.put("OptionPane.background", Color.black);
         UI.put("Panel.background", Color.white);
         nombreUsu = JOptionPane.showInputDialog("Ingresa el nombre con el que te deseas identificar");
-        while(nombreUsu==null){
-            nombreUsu = JOptionPane.showInputDialog("Ingresa el nombre con el que te deseas identificar");
-        }
-        if (nombreUsu==null){
+        if (nombreUsu.equals("")){
             nombreUsu="Samurai";
         }
         JFrame frame = new Chat("TurboChat");

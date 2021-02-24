@@ -52,6 +52,7 @@ public class Cliente implements Runnable {
                 out.writeUTF(mensaje);
 
                 cliente.close();
+                mensaje="";
             }
 
         } catch (Exception e) {

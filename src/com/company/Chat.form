@@ -48,6 +48,7 @@
               <background color="-15394787"/>
               <editable value="false"/>
               <enabled value="false"/>
+              <font name="Arial" size="12" style="0"/>
               <foreground color="-393226"/>
             </properties>
           </component>
