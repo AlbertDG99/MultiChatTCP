@@ -10,7 +10,7 @@ public class Usuario1 extends javax.swing.JFrame implements Observer {
         iniciarComponentes();
         this.getRootPane().setDefaultButton(this.btnEnviar);
         
-        Servidor servidor = new Servidor(8000);
+        Servidor servidor = new Servidor(5000);
         // Agrego usuario 1 como observador de servidor para recibir notificaciones de mensajes
         servidor.addObserver(this);
         Thread thread = new Thread(servidor);

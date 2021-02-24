@@ -12,7 +12,7 @@ import java.util.Observable;
 
 public class ServidorCentral extends Observable {
 
-    public static void main() {
+    public static void main(String[] args) {
         int puerto = 9000;
         ServerSocket servidor = null;
         Socket cliente = null;
@@ -28,47 +28,48 @@ public class ServidorCentral extends Observable {
             while (true) {
                 // Espero a que un cliente se coencte
                 cliente = servidor.accept();
+                InetAddress ipCliActual = cliente.getInetAddress();
                 if (listaIP.indexOf(cliente.getInetAddress()) == -1)
                     listaIP.add(cliente.getInetAddress());
-                in = new DataInputStream(cliente.getInputStream());
+
                 /*-------------------------------*/
-                try {
-                    BufferedInputStream bufferedInputStream=new BufferedInputStream(in);
-                    BufferedImage bufferedImage= ImageIO.read(bufferedInputStream);
+                /*
+               BufferedInputStream bufferedInputStream = new BufferedInputStream(cliente.getInputStream());
+               BufferedImage bufferedImage = ImageIO.read(bufferedInputStream);
 
+                if (bufferedImage != null) {
+                    for (InetAddress ip : listaIP) {
+                        if (!ip.toString().equals(ipCliActual.toString())) {
+                            cliente = new Socket(ip, 5000);
+                            OutputStream outputStream = cliente.getOutputStream();
+                            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
+                            //Envio del mensaje
+                            ImageIO.write(bufferedImage, "png", bufferedOutputStream);
+                            bufferedOutputStream.close();
+                            cliente.close();
+                        }
+                    }
+                } else {*/
 
-
-
-                   // ImageIO.write(bufferedImage,"png",bufferedOutputStream);
-                   // bufferedOutputStream.close();
+                    in = new DataInputStream(cliente.getInputStream());
+                    String mensaje = in.readUTF();
                     cliente.close();
-                }catch (Exception e){
 
+                    DataOutputStream out;
+                    for (InetAddress ip : listaIP) {
+                        if (!ip.toString().equals(ipCliActual.toString())) {
+                            cliente = new Socket(ip, 5000);
+                            out = new DataOutputStream(cliente.getOutputStream());
+
+                            //Envio del mensaje
+                            out.writeUTF(mensaje);
+
+                            cliente.close();
+                        }
+                    }
                 }
-
-
-
-
-                //Leer el mensaje
-                String mensaje = in.readUTF();
-
-                cliente.close();
-
-                DataOutputStream out;
-                for (InetAddress ip : listaIP) {
-                    cliente = new Socket(ip, 5000);
-                    out = new DataOutputStream(cliente.getOutputStream());
-
-                    //Envio del mensaje
-                    out.writeUTF(mensaje);
-
-                    cliente.close();
-                }
-
-
-            }
-
-        } catch (Exception e) {
+            } catch (IOException ioException) {
+            ioException.printStackTrace();
         }
     }
 }

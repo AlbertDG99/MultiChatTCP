@@ -32,7 +32,7 @@ public class Cliente implements Runnable {
             if(mensaje.equals("")){
                 ImageIcon imageIcon=new ImageIcon(ruta);
 
-
+                cliente.setTrafficClass(1);
                 OutputStream outputStream=cliente.getOutputStream();
                 BufferedOutputStream bufferedOutputStream=new BufferedOutputStream(outputStream);
                 Image image=imageIcon.getImage();
