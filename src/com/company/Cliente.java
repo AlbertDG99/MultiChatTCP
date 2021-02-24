@@ -18,7 +18,7 @@ public class Cliente implements Runnable {
 
     @Override
     public void run() {
-        final String HOST = "25.121.10.101"; // 127.0.0.1
+        final String HOST = "192.168.1.121"; // 127.0.0.1
 
         DataOutputStream out;
 

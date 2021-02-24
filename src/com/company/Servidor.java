@@ -29,7 +29,6 @@ public class Servidor extends Observable implements Runnable {
             while(true) {
                 // Espero a que un cliente se coencte
                 cliente = servidor.accept();
-
                 in = new DataInputStream(cliente.getInputStream());
 
                 //Leer el mensaje

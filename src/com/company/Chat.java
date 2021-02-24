@@ -4,6 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.ImageObserver;
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -60,7 +65,7 @@ public class Chat extends JFrame implements Observer {
 
         tMensaje.setText("");
 
-        Cliente cliente = new Cliente(8000, mensaje);
+        Cliente cliente = new Cliente(9000, mensaje);
         Thread thread = new Thread(cliente);
         thread.start();
     }
@@ -81,6 +86,9 @@ public class Chat extends JFrame implements Observer {
         frame.setVisible(true);
     }
 
+
+
+
     private void createUIComponents() {
         // TODO: place custom component creation code here
     }
@@ -90,3 +98,5 @@ public class Chat extends JFrame implements Observer {
         this.tChat.append((String) arg);
     }
 }
+
+
