@@ -1,6 +1,9 @@
 package com.company;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.Socket;
 
@@ -25,14 +28,23 @@ public class Cliente implements Runnable {
         DataOutputStream out;
 
         try {
-            if(this.mensaje.equals("")){
-                //ImageIcon imagen=new ImageIcon(this.ruta);
-                //Socket cliente = new Socket(HOST, puerto);
+            Socket cliente = new Socket(HOST, puerto);
+            if(mensaje.equals("")){
+                ImageIcon imageIcon=new ImageIcon(ruta);
 
-               // OutputStream outputSream=new BufferedOutputStream(outputSream)
+
+                OutputStream outputStream=cliente.getOutputStream();
+                BufferedOutputStream bufferedOutputStream=new BufferedOutputStream(outputStream);
+                Image image=imageIcon.getImage();
+                BufferedImage bufferedImage=new BufferedImage(image.getWidth(null),image.getHeight(null),BufferedImage.TYPE_INT_RGB);
+
+                ImageIO.write(bufferedImage,"png",bufferedOutputStream);
+                bufferedOutputStream.close();
+                cliente.close();
+
 
             }else{//Mensaje
-                Socket cliente = new Socket(HOST, puerto);
+
 
                 out = new DataOutputStream(cliente.getOutputStream());
 

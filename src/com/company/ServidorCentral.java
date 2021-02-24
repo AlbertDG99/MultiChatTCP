@@ -1,8 +1,9 @@
 package com.company;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -20,6 +21,9 @@ public class ServidorCentral extends Observable {
 
         try {
             servidor = new ServerSocket(puerto);
+
+
+
             /* Siempre escuchando peticiones */
             while (true) {
                 // Espero a que un cliente se coencte
@@ -27,6 +31,23 @@ public class ServidorCentral extends Observable {
                 if (listaIP.indexOf(cliente.getInetAddress()) == -1)
                     listaIP.add(cliente.getInetAddress());
                 in = new DataInputStream(cliente.getInputStream());
+                /*-------------------------------*/
+                try {
+                    BufferedInputStream bufferedInputStream=new BufferedInputStream(in);
+                    BufferedImage bufferedImage= ImageIO.read(bufferedInputStream);
+
+
+
+
+                   // ImageIO.write(bufferedImage,"png",bufferedOutputStream);
+                   // bufferedOutputStream.close();
+                    cliente.close();
+                }catch (Exception e){
+
+                }
+
+
+
 
                 //Leer el mensaje
                 String mensaje = in.readUTF();
