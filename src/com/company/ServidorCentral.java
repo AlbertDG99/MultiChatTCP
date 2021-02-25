@@ -3,9 +3,6 @@ package com.company;
 import netscape.javascript.JSObject;
 import org.json.simple.JSONValue;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -13,8 +10,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Observable;
-
-import org.apache.commons.io.IOUtils;
 
 public class ServidorCentral extends Observable {
 
@@ -31,21 +26,23 @@ public class ServidorCentral extends Observable {
         ArrayList<InetAddress> listaIP = new ArrayList<InetAddress>();
 
         try {
-
+            servidor = new ServerSocket(puerto);
 
 
             /* Siempre escuchando peticiones */
             while (true) {
                 // Espero a que un cliente se coencte
-                cliente = servidor.accept();
+              //  cliente = servidor.accept();
+
+
+
+                /*-------------------------------*/
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
+
                 InetAddress ipCliActual = cliente.getInetAddress();
                 if (listaIP.indexOf(cliente.getInetAddress()) == -1)
                     listaIP.add(cliente.getInetAddress());
 
-
-                /*-------------------------------*/
-                servidor = new ServerSocket(puerto);
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
                 String input = org.apache.commons.io.IOUtils.toString(bufferedReader);
                 JSObject objeto = (JSObject) JSONValue.parse(input);
                 String mensaje=objeto.getMember("mensaje").toString();
