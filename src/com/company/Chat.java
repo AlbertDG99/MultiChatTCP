@@ -50,7 +50,7 @@ private  File selectedFile;
             public void actionPerformed(ActionEvent e) {
                 enviarMensaje();
             }
-
+//algo
         });
 
         tMensaje.addKeyListener(new KeyAdapter() {
