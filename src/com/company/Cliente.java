@@ -43,7 +43,7 @@ public class Cliente implements Runnable {
             bufferedOutputStream.close();
             cliente.close();
 
-            File imagen = new File("asdf");
+            File imagen = new File(ruta);
             //Image conversion to byte array
             FileInputStream imageInFile = new FileInputStream(imagen);
             byte imageData[] = new byte[(int) imagen.length()];
