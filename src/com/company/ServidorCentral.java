@@ -32,6 +32,7 @@ public class ServidorCentral extends Observable {
                 if (listaIP.indexOf(cliente.getInetAddress()) == -1)
                     listaIP.add(cliente.getInetAddress());
 
+
                 /*-------------------------------*/
                 /*
                BufferedInputStream bufferedInputStream = new BufferedInputStream(cliente.getInputStream());
@@ -52,7 +53,7 @@ public class ServidorCentral extends Observable {
                 } else {*/
 
                     in = new DataInputStream(cliente.getInputStream());
-                    String mensaje = in.readUTF();
+                   String mensaje = in.readUTF();
                     cliente.close();
 
                     DataOutputStream out;
