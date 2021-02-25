@@ -1,11 +1,14 @@
 package com.company;
 
+import org.json.simple.JSONObject;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.Socket;
+import java.util.Base64;
 
 public class Cliente implements Runnable {
 
@@ -29,35 +32,56 @@ public class Cliente implements Runnable {
 
         try {
             Socket cliente = new Socket(HOST, puerto);
-            if(mensaje.equals("")){
-                ImageIcon imageIcon=new ImageIcon(ruta);
+            ImageIcon imageIcon = new ImageIcon(ruta);
 
-                cliente.setTrafficClass(1);
-                OutputStream outputStream=cliente.getOutputStream();
-                BufferedOutputStream bufferedOutputStream=new BufferedOutputStream(outputStream);
-                Image image=imageIcon.getImage();
-                BufferedImage bufferedImage=new BufferedImage(image.getWidth(null),image.getHeight(null),BufferedImage.TYPE_INT_RGB);
+            OutputStream outputStream = cliente.getOutputStream();
+            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
+            Image image = imageIcon.getImage();
+            BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
 
-                ImageIO.write(bufferedImage,"png",bufferedOutputStream);
-                bufferedOutputStream.close();
-                cliente.close();
+            ImageIO.write(bufferedImage, "png", bufferedOutputStream);
+            bufferedOutputStream.close();
+            cliente.close();
 
+            File imagen = new File(ruta);
+            //Image conversion to byte array
+            FileInputStream imageInFile = new FileInputStream(imagen);
+            byte imageData[] = new byte[(int) imagen.length()];
+            imageInFile.read(imageData);
 
-            }else{//Mensaje
+            //Image conversion byte array in Base64 String
+            String imageDataString = encodeImage(imageData);
+            imageInFile.close();
 
+            //the object that will be send to Server
+            JSONObject obj = new JSONObject();
+            //name of the image
+            obj.put("imagen", imageDataString);
+            obj.put("mensaje", mensaje);
 
-                out = new DataOutputStream(cliente.getOutputStream());
+            //connection to Server
 
-                //Envio del mensaje
-                out.writeUTF(mensaje);
+            DataOutputStream outToServer = new DataOutputStream(cliente.getOutputStream());
 
-                cliente.close();
-                mensaje="";
-            }
+            //send data
+            outToServer.writeBytes(obj.toJSONString());
+            cliente.close();
 
-        } catch (Exception e) {
+/*
+            out = new DataOutputStream(cliente.getOutputStream());
 
+            //Envio del mensaje
+            out.writeUTF(mensaje);
+
+            cliente.close();
+            mensaje = "";
+*/
+        } catch (IOException unknownHostException) {
+            unknownHostException.printStackTrace();
         }
+    }
+    public static String encodeImage(byte[] imageByteArray) {
+        return Base64.getEncoder().encodeToString(imageByteArray);
     }
 
 }
