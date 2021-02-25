@@ -127,7 +127,7 @@ private  File selectedFile;
         JFrame frame = new Chat("TurboChat");
         frame.setSize(500, 500);
         frame.setVisible(true);
-        Cliente cliente = new Cliente(9000,"------Se unió al chat------","");
+        Cliente cliente = new Cliente(9000,"------"+nombreUsu+" se unió al chat------","");
         Thread thread = new Thread(cliente);
         thread.start();
     }
