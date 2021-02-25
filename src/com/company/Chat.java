@@ -16,6 +16,7 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.plaf.ColorUIResource;
 import java.io.File;
 
 public class Chat extends JFrame implements Observer {
@@ -114,8 +115,9 @@ private  File selectedFile;
 
     public static void main(String[] args) {
         UIManager UI=new UIManager();
-        UI.put("OptionPane.background", Color.black);
-        UI.put("Panel.background", Color.white);
+        UI.put("OptionPane.background",Color.black);
+        UI.put("Panel.background", new ColorUIResource(144, 154, 171));
+
         nombreUsu = JOptionPane.showInputDialog("Ingresa el nombre con el que te deseas identificar");
         if (nombreUsu.equals("")){
             nombreUsu="Samurai";
